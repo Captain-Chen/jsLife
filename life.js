@@ -1,7 +1,7 @@
 const print = console.log.bind(console);
 
-let gridWidth = 10;
-let gridHeight = 5;
+let gridWidth = 80;
+let gridHeight = 20;
 
 function Grid(width, height){
     this.grid = new Array(width * height).fill(0);
@@ -24,11 +24,9 @@ Grid.prototype.getNeighbours = function(x, y){
     for(let i = 0; i < offSet.length; i++){
         if(isInBounds(x + offSet[i].x, y + offSet[i].y)){
             const currCell = this.get(x + offSet[i].x, y + offSet[i].y);
-            print(`(${x},${y})'s neighbour: (${x + offSet[i].x}, ${y + offSet[i].y})=>${currCell}`);
             count += currCell || 0; // may return undefined
         }
     }
-    //print(`(${x},${y}): ${count}`);
     return count;
 }
 
@@ -61,7 +59,8 @@ function update(){
 
             switch(liveCells){
                 case 2:
-                    grid2.set(i, j, (grid2.get(i,j)));
+                    grid2.set(i, j, grid.get(i,j));
+                    result = 'nothing happened';
                     break;
                 case 3:
                     grid2.set(i, j, 1);
@@ -73,14 +72,12 @@ function update(){
                     result = 'dead';
                     // dead
             }
-            //print(`Number of neighbours for (${i},${j}): ${liveCells}, ${result}`);
-
-            // switch
-            let temp = grid;
-            grid = grid2
-            grid2 = temp;
         }
     }
+    // swap buffer
+    let temp = grid;
+    grid = grid2;
+    grid2 = temp;
 }
 
 function render(col){
@@ -104,23 +101,24 @@ console.reset = function(){
 
 let grid = new Grid(gridWidth, gridHeight);
 let grid2 = new Grid(gridWidth, gridHeight);
+randomize(grid);
+
+// oscillator
+//grid.set(1, 2, 1);
+//grid.set(2, 2, 1);
+//grid.set(3, 2, 1);
+
 print(render(grid));
-//randomize(grid);
-grid.set(1, 1, 1);
-grid.set(2, 1, 1);
-grid.set(3, 1, 1);
-print(render(grid));
-update();
 
 let iter = 0;
-let maxIterations = 1;
+let maxIterations = 10000;
 
-let fps = 1000 / 60;
-//let id = animate();
+let fps = 1000 / 10;
+let id = animate();
 
 function animate(){
     return setInterval(()=>{
-        //console.reset();
+        console.reset();
         update();
         print(render(grid));
         if(iter++ > maxIterations){
