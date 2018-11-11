@@ -1,6 +1,6 @@
 const print = console.log.bind(console);
 
-let gridWidth = 80;
+let gridWidth = 40;
 let gridHeight = 20;
 
 function Grid(width, height){
@@ -101,19 +101,55 @@ console.reset = function(){
 
 let grid = new Grid(gridWidth, gridHeight);
 let grid2 = new Grid(gridWidth, gridHeight);
-randomize(grid);
+//randomize(grid);
 
-// oscillator
-//grid.set(1, 2, 1);
-//grid.set(2, 2, 1);
-//grid.set(3, 2, 1);
+// square
+grid.set(1, 8, 1);
+grid.set(0, 8, 1);
+grid.set(1, 9, 1);
+grid.set(0, 9, 1);
+
+grid.set(10, 8, 1);
+grid.set(10, 9, 1);
+grid.set(10, 10, 1);
+grid.set(11, 7, 1);
+grid.set(11, 11, 1);
+grid.set(12, 6, 1);
+grid.set(12, 12, 1);
+grid.set(13, 6, 1);
+grid.set(13, 12, 1);
+grid.set(14, 9, 1);
+grid.set(15, 7, 1);
+grid.set(15, 11, 1);
+grid.set(16, 8, 1);
+grid.set(16, 9, 1);
+grid.set(16, 10, 1);
+grid.set(17, 9, 1);
+
+grid.set(20, 8, 1);
+grid.set(21, 8, 1);
+grid.set(20, 7, 1);
+grid.set(21, 7, 1);
+grid.set(20, 6, 1);
+grid.set(21, 6, 1);
+grid.set(22, 5, 1);
+grid.set(22, 9, 1);
+grid.set(24, 5, 1);
+grid.set(24, 9, 1);
+grid.set(24, 4, 1);
+grid.set(24, 10, 1);
+
+grid.set(34, 6, 1);
+grid.set(35, 6, 1);
+grid.set(34, 7, 1);
+grid.set(35, 7, 1);
 
 print(render(grid));
 
 let iter = 0;
 let maxIterations = 10000;
 
-let fps = 1000 / 10;
+let fps = 1000 / 60;
 let id = animate();
 
 function animate(){
